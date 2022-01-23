@@ -34,7 +34,7 @@ describe('PostsDetailPage.vue', () => {
     fieldTitle = wrapper.find('#title')
     fieldAuthor = wrapper.find('#author')
     fieldContent = wrapper.find('#content')
-    buttonSave = wrapper.find('.v-form .v-btn')
+    buttonSave = wrapper.find('.v-form .v-btn:nth-child(2)')
   })
 
   afterEach(() => {
@@ -166,6 +166,6 @@ describe('PostsDetailPage.vue', () => {
     expect(saveSpy).toBeCalled()
     await wrapper.vm.$nextTick()
     expect(wrapper.find('.v-alert').isVisible()).toBe(false)
-    expect(stub).toHaveBeenCalledWith({name: 'main'})
+    expect(stub).toHaveBeenCalledWith({ name: 'main' })
   })
 })

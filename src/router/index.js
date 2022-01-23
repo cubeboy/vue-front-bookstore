@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import MainPage from '../views/MainPage.vue'
 import PostsDetailPage from '@/views/PostsDetailPage'
 
 Vue.use(VueRouter)
@@ -12,7 +13,12 @@ const routes = [
     component: Home,
     children: [
       {
-        path: '/postsDetail',
+        path: '/',
+        name: 'MainPage',
+        component: MainPage
+      },
+      {
+        path: '/postsDetail/:id',
         name: 'PostsDetailPage',
         component: PostsDetailPage
       }

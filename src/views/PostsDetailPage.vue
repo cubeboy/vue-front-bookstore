@@ -17,7 +17,12 @@
               <v-col md="12"><v-textarea id="content" label="내용" v-model="form.content" :rules="form.contentRules"></v-textarea></v-col>
             </v-row>
             <v-row>
-              <v-col md="12"><v-btn color="primary" @click="postsSave()">save</v-btn></v-col>
+              <v-col md="12">
+                <v-btn-toggle>
+                  <v-btn block color="secondary" @click="$router.push({name: 'MainPage'})">cancel</v-btn>
+                  <v-btn block color="primary" @click="postsSave()">save</v-btn>
+                </v-btn-toggle>
+              </v-col>
             </v-row>
           </v-container>
         </v-form>
