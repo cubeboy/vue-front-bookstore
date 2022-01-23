@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import PostsSavePage from '@/views/PostsSavePage'
+import PostsDetailPage from '@/views/PostsDetailPage'
 
 Vue.use(VueRouter)
 
@@ -9,12 +9,14 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
-  },
-  {
-    path: '/postsSave',
-    name: 'PostsSavePage',
-    component: PostsSavePage
+    component: Home,
+    children: [
+      {
+        path: '/postsDetail',
+        name: 'PostsDetailPage',
+        component: PostsDetailPage
+      }
+    ]
   }
 ]
 
