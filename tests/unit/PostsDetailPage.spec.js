@@ -66,6 +66,19 @@ describe('PostsDetailPage.vue', () => {
     expect(fieldContent.element.value).toEqual(content)
   })
 
+  it('PostsDetailPage : Form to Model  binding test', async () => {
+    const form = wrapper.vm.form
+    fieldTitle.setValue(title)
+    fieldAuthor.setValue(author)
+    fieldContent.setValue(content)
+
+    await wrapper.vm.$nextTick()
+
+    expect(form.title).toEqual(title)
+    expect(form.author).toEqual(author)
+    expect(form.content).toEqual(content)
+  })
+
   it('PostsDetailPage : save clicked test', async () => {
     const stub = jest.fn()
     wrapper.vm.postsSave = stub
@@ -75,20 +88,84 @@ describe('PostsDetailPage.vue', () => {
 
   it('PostsDetailPage : save service error', async () => {
     const form = wrapper.vm.form
-    form.title = 'Error title'
-    form.authro = author
-    form.content = content
+    fieldTitle.setValue('Error title')
+    fieldAuthor.setValue(author)
+    fieldContent.setValue(content)
 
+    wrapper.vm.$refs.form.validate()
+    await wrapper.vm.$nextTick()
+    expect(form.valid).toEqual(true)
     expect(wrapper.find('.v-alert').isVisible()).toBe(false)
     buttonSave.trigger('click')
     await wrapper.vm.$nextTick()
     expect(saveSpy).toBeCalled()
     await wrapper.vm.$nextTick()
     expect(wrapper.find('.v-alert').isVisible()).toBe(true)
-
   })
 
-  it('PostsDetailPage : input form validate', async () => {
+  it('PostsDetailPage : input form title validate', async () => {
+    const form = wrapper.vm.form
+    fieldTitle.setValue('')
+    fieldAuthor.setValue(author)
+    fieldContent.setValue(content)
 
+    wrapper.vm.$refs.form.validate()
+    await wrapper.vm.$nextTick()
+    expect(form.valid).toEqual(false)
+    buttonSave.trigger('click')
+    await wrapper.vm.$nextTick()
+    expect(form.valid).toEqual(false)
+    expect(saveSpy).not.toBeCalled()
+  })
+
+  it('PostsDetailPage : input form author validate', async () => {
+    const form = wrapper.vm.form
+    fieldTitle.setValue(title)
+    fieldAuthor.setValue('?')
+    fieldContent.setValue(content)
+
+    wrapper.vm.$refs.form.validate()
+    await wrapper.vm.$nextTick()
+    expect(form.valid).toEqual(false)
+    buttonSave.trigger('click')
+    await wrapper.vm.$nextTick()
+    expect(form.valid).toEqual(false)
+    expect(saveSpy).not.toBeCalled()
+  })
+
+  it('PostsDetailPage : input form content validate', async () => {
+    const form = wrapper.vm.form
+    fieldTitle.setValue(title)
+    fieldAuthor.setValue(author)
+    fieldContent.setValue('짧은내용')
+
+    wrapper.vm.$refs.form.validate()
+    await wrapper.vm.$nextTick()
+    expect(form.valid).toEqual(false)
+    buttonSave.trigger('click')
+    await wrapper.vm.$nextTick()
+    expect(form.valid).toEqual(false)
+    expect(saveSpy).not.toBeCalled()
+  })
+
+  it('PostsDetailPage : save service success', async () => {
+    const form = wrapper.vm.form
+    fieldTitle.setValue(title)
+    fieldAuthor.setValue(author)
+    fieldContent.setValue(content)
+
+    const stub = jest.fn()
+    wrapper.vm.$router.push = stub
+
+    wrapper.vm.$refs.form.validate()
+    await wrapper.vm.$nextTick()
+    expect(form.valid).toEqual(true)
+    expect(wrapper.find('.v-alert').isVisible()).toBe(false)
+    buttonSave.trigger('click')
+    await wrapper.vm.$nextTick()
+    expect(saveSpy).toBeCalled()
+    await wrapper.vm.$nextTick()
+    expect(wrapper.find('.v-alert').isVisible()).toBe(false)
+    expect(stub).toHaveBeenCalledWith({name: 'main'})
   })
 })
