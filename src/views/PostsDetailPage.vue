@@ -40,10 +40,8 @@ export default {
     if (this.$route.params.id === undefined) { return }
 
     return PostsService.getPostsById(this.$route.params.id).then((data) => {
-      this.form.id = data.id
-      this.form.title = data.title
-      this.form.author = data.author
-      this.form.content = data.content
+      this.mode = 'updatePosts'
+      Object.assign(this.form, data)
     }).catch(error => {
       this.errorMessage = error.message
     })
@@ -51,6 +49,7 @@ export default {
   data: function () {
     return {
       formValid: true,
+      mode: 'addPosts',
       form: {
         id: '',
         title: '',
@@ -78,9 +77,15 @@ export default {
       if (this.formValid === false) {
         return
       }
+      if (this.mode === 'updatePosts') {
+        this.$store.dispatch(this.mode, this.form)
+        this.$router.push({ name: 'MainPage' })
+        return
+      }
 
       return PostsService.save(this.form).then(data => {
-        this.$router.push({ name: 'main' })
+        this.$store.dispatch(this.mode, data)
+        this.$router.push({ name: 'MainPage' })
       }).catch(error => {
         this.errorMessage = error.message
       })

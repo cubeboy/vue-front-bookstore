@@ -1,17 +1,19 @@
 import postsList from './__mocks__/FixturePosts'
 
+var index = 5
+
 export default {
   save (posts) {
     return new Promise((resolve, reject) => {
-      if (posts.title === 'Test Title') {
+      try {
         resolve({
-          id: 1,
+          id: index++,
           title: posts.title,
           author: posts.author,
           content: posts.content
         })
-      } else {
-        reject(new Error('게시물 저장 오류'))
+      } catch (error) {
+        reject(new Error('게시물 저장 오류 : ' + error.message))
       }
     })
   },

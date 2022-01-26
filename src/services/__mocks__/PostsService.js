@@ -5,7 +5,7 @@ export default {
     return new Promise((resolve, reject) => {
       if (posts.title === 'Test Title') {
         resolve({
-          id: 1,
+          id: 99,
           title: posts.title,
           author: posts.author,
           content: posts.content

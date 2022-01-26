@@ -2,34 +2,15 @@ import { mount, createLocalVue } from '@vue/test-utils'
 import PostsDetailPage from '@/views/PostsDetailPage'
 import PostsService from '@/services/PostsService'
 import Vuetify from 'vuetify'
+import store from '@/store'
 
 jest.mock('@/services/PostsService')
 
 describe('PostsDetailPage.vue Test', () => {
-  /*
-  let fieldTitle
-  let fieldAuthor
-  let fieldContent
-  let buttonSave
-  let saveSpy
-  */
   let getPostsByIdSpy
-
-  /*
-  const title = 'Test Title'
-  const author = 'authro@test.com'
-  const content = 'Post content test'
-  */
 
   beforeEach(() => {
     getPostsByIdSpy = jest.spyOn(PostsService, 'getPostsById')
-    /*
-    saveSpy = jest.spyOn(PostsService, 'save')
-    fieldTitle = wrapper.find('#title')
-    fieldAuthor = wrapper.find('#author')
-    fieldContent = wrapper.find('#content')
-    buttonSave = wrapper.find('.v-form .v-btn:nth-child(2)')
-    */
   })
 
   afterEach(() => {
@@ -79,6 +60,7 @@ describe('PostsDetailPage.vue Test', () => {
       mocks: {
         $route
       },
+      store,
       localVue,
       vuetify
     })

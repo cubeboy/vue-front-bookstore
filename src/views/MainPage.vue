@@ -31,12 +31,18 @@
 
 <script>
 import postsService from '@/services/PostsService'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'MainPage',
+  computed: {
+    ...mapGetters([
+      'postsList'
+    ])
+  },
   created () {
     postsService.getAll().then((data) => {
-      this.postsList = data
+      this.$store.dispatch('setPostsList', data)
     }).catch(error => {
       this.errorMessage = error.message
     })
@@ -48,8 +54,7 @@ export default {
         { text: '제목', value: 'title' },
         { text: '작성자', value: 'author' },
         { text: '내용', value: 'content' }
-      ],
-      postsList: []
+      ]
     }
   }
 }

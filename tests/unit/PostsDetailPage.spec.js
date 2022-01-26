@@ -3,6 +3,7 @@ import PostsDetailPage from '@/views/PostsDetailPage'
 import PostsService from '@/services/PostsService'
 import VueRouter from 'vue-router'
 import Vuetify from 'vuetify'
+import store from '@/store'
 
 const localVue = createLocalVue()
 const vuetify = new Vuetify()
@@ -26,6 +27,7 @@ describe('PostsDetailPage.vue Test', () => {
   beforeEach(() => {
     wrapper = mount(PostsDetailPage, {
       localVue,
+      store,
       router,
       vuetify
     })
@@ -160,7 +162,8 @@ describe('PostsDetailPage.vue Test', () => {
     await wrapper.vm.$nextTick()
     expect(saveSpy).toBeCalled()
     await wrapper.vm.$nextTick()
+    console.log(wrapper.vm.errorMessage)
     expect(wrapper.find('.v-alert').isVisible()).toBe(false)
-    expect(stub).toHaveBeenCalledWith({ name: 'main' })
+    expect(stub).toHaveBeenCalledWith({ name: 'MainPage' })
   })
 })
