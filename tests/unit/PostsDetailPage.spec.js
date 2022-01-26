@@ -11,7 +11,7 @@ const router = new VueRouter()
 
 jest.mock('@/services/PostsService')
 
-describe('PostsDetailPage.vue', () => {
+describe('PostsDetailPage.vue Test', () => {
   let wrapper
   let fieldTitle
   let fieldAuthor
@@ -87,14 +87,13 @@ describe('PostsDetailPage.vue', () => {
   })
 
   it('PostsDetailPage : save service error', async () => {
-    const form = wrapper.vm.form
     fieldTitle.setValue('Error title')
     fieldAuthor.setValue(author)
     fieldContent.setValue(content)
 
     wrapper.vm.$refs.form.validate()
     await wrapper.vm.$nextTick()
-    expect(form.valid).toEqual(true)
+    expect(wrapper.vm.formValid).toEqual(true)
     expect(wrapper.find('.v-alert').isVisible()).toBe(false)
     buttonSave.trigger('click')
     await wrapper.vm.$nextTick()
@@ -104,52 +103,48 @@ describe('PostsDetailPage.vue', () => {
   })
 
   it('PostsDetailPage : input form title validate', async () => {
-    const form = wrapper.vm.form
     fieldTitle.setValue('')
     fieldAuthor.setValue(author)
     fieldContent.setValue(content)
 
     wrapper.vm.$refs.form.validate()
     await wrapper.vm.$nextTick()
-    expect(form.valid).toEqual(false)
+    expect(wrapper.vm.formValid).toEqual(false)
     buttonSave.trigger('click')
     await wrapper.vm.$nextTick()
-    expect(form.valid).toEqual(false)
+    expect(wrapper.vm.formValid).toEqual(false)
     expect(saveSpy).not.toBeCalled()
   })
 
   it('PostsDetailPage : input form author validate', async () => {
-    const form = wrapper.vm.form
     fieldTitle.setValue(title)
     fieldAuthor.setValue('?')
     fieldContent.setValue(content)
 
     wrapper.vm.$refs.form.validate()
     await wrapper.vm.$nextTick()
-    expect(form.valid).toEqual(false)
+    expect(wrapper.vm.formValid).toEqual(false)
     buttonSave.trigger('click')
     await wrapper.vm.$nextTick()
-    expect(form.valid).toEqual(false)
+    expect(wrapper.vm.formValid).toEqual(false)
     expect(saveSpy).not.toBeCalled()
   })
 
   it('PostsDetailPage : input form content validate', async () => {
-    const form = wrapper.vm.form
     fieldTitle.setValue(title)
     fieldAuthor.setValue(author)
     fieldContent.setValue('짧은내용')
 
     wrapper.vm.$refs.form.validate()
     await wrapper.vm.$nextTick()
-    expect(form.valid).toEqual(false)
+    expect(wrapper.vm.formValid).toEqual(false)
     buttonSave.trigger('click')
     await wrapper.vm.$nextTick()
-    expect(form.valid).toEqual(false)
+    expect(wrapper.vm.formValid).toEqual(false)
     expect(saveSpy).not.toBeCalled()
   })
 
   it('PostsDetailPage : save service success', async () => {
-    const form = wrapper.vm.form
     fieldTitle.setValue(title)
     fieldAuthor.setValue(author)
     fieldContent.setValue(content)
@@ -159,7 +154,7 @@ describe('PostsDetailPage.vue', () => {
 
     wrapper.vm.$refs.form.validate()
     await wrapper.vm.$nextTick()
-    expect(form.valid).toEqual(true)
+    expect(wrapper.vm.formValid).toEqual(true)
     expect(wrapper.find('.v-alert').isVisible()).toBe(false)
     buttonSave.trigger('click')
     await wrapper.vm.$nextTick()

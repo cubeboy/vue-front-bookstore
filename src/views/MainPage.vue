@@ -2,6 +2,13 @@
   <v-container>
     <v-row class="text-center">
       <v-col md="12">
+        <v-row md="12">
+          <v-alert v-show="errorMessage" type="error">{{ errorMessage }}</v-alert>
+        </v-row>
+      </v-col>
+    </v-row>
+    <v-row class="text-center">
+      <v-col md="12">
         <v-data-table
           :headers="headers"
           :items="postsList"
@@ -23,35 +30,26 @@
 </template>
 
 <script>
+import postsService from '@/services/PostsService'
+
 export default {
   name: 'MainPage',
+  created () {
+    postsService.getAll().then((data) => {
+      this.postsList = data
+    }).catch(error => {
+      this.errorMessage = error.message
+    })
+  },
   data: function () {
     return {
+      errorMessage: '',
       headers: [
         { text: '제목', value: 'title' },
         { text: '작성자', value: 'author' },
         { text: '내용', value: 'content' }
       ],
-      postsList: [
-        {
-          id: 1,
-          title: '1st Title',
-          author: 'FirstUser',
-          content: 'First content'
-        },
-        {
-          id: 2,
-          title: '2st Title',
-          author: 'SecondUser',
-          content: 'Second content'
-        },
-        {
-          id: 3,
-          title: '3st Title',
-          author: 'ThirdUser',
-          content: 'Third content'
-        }
-      ]
+      postsList: []
     }
   }
 }

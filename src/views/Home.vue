@@ -2,7 +2,7 @@
 <v-app>
   <v-card>
     <v-app-bar elevation="3">
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <router-link :to="{name: 'MainPage'}"><v-icon large>mdi-clipboard-text</v-icon></router-link>
     </v-app-bar>
   </v-card>
   <v-main>
@@ -18,3 +18,7 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  a { text-decoration: none;}
+</style>

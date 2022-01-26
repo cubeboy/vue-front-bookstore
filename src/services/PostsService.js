@@ -1,3 +1,5 @@
+import postsList from './__mocks__/FixturePosts'
+
 export default {
   save (posts) {
     return new Promise((resolve, reject) => {
@@ -15,26 +17,21 @@ export default {
   },
   getAll () {
     return new Promise((resolve, reject) => {
-      resolve([
-        {
-          id: 1,
-          title: '1st Title',
-          author: 'FirstUser',
-          content: 'First content'
-        },
-        {
-          id: 2,
-          title: '2st Title',
-          author: 'SecondUser',
-          content: 'Second content'
-        },
-        {
-          id: 3,
-          title: '3st Title',
-          author: 'ThirdUser',
-          content: 'Third content'
-        }
-      ])
+      try {
+        resolve(postsList)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  },
+  getPostsById (id) {
+    return new Promise((resolve, reject) => {
+      const posts = postsList.find(element => element.id === id)
+      if (posts === undefined) {
+        reject(new Error('삭제된 컨텐츠 입니다.'))
+      } else {
+        resolve(posts)
+      }
     })
   }
 }
