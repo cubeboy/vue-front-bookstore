@@ -2,7 +2,7 @@
 <v-app>
   <v-card>
     <v-app-bar elevation="3">
-      <router-link :to="{name: 'MainPage'}"><v-icon large>mdi-clipboard-text</v-icon></router-link>
+      <router-link :to="{name: 'MainPage'}"><v-icon large>mdi-home-city</v-icon></router-link>
     </v-app-bar>
   </v-card>
   <v-main>
