@@ -8,5 +8,8 @@ export default {
   },
   setPostsList (state, list) {
     state.postsList = list
+  },
+  setIsLoading (state, status) {
+    state.pageStatus.isLoading = status
   }
 }

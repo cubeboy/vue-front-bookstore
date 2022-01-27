@@ -36,6 +36,7 @@ describe('PostsDetailPage.vue Test', () => {
       mocks: {
         $route
       },
+      store,
       localVue,
       vuetify
     })
@@ -43,6 +44,7 @@ describe('PostsDetailPage.vue Test', () => {
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.form.id).toEqual('')
     expect(getPostsByIdSpy).toBeCalled()
+    await wrapper.vm.$nextTick()
     expect(wrapper.find('.v-alert').isVisible()).toBe(true)
   })
 

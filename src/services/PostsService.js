@@ -6,12 +6,14 @@ export default {
   save (posts) {
     return new Promise((resolve, reject) => {
       try {
-        resolve({
-          id: index++,
-          title: posts.title,
-          author: posts.author,
-          content: posts.content
-        })
+        setTimeout(() => {
+          resolve({
+            id: index++,
+            title: posts.title,
+            author: posts.author,
+            content: posts.content
+          })
+        }, 3000)
       } catch (error) {
         reject(new Error('게시물 저장 오류 : ' + error.message))
       }
@@ -32,7 +34,7 @@ export default {
       if (posts === undefined) {
         reject(new Error('삭제된 컨텐츠 입니다.'))
       } else {
-        resolve(posts)
+        setTimeout(() => { resolve(posts) }, 1000)
       }
     })
   }

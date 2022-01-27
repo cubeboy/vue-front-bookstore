@@ -36,14 +36,17 @@ import PostsService from '@/services/PostsService'
 
 export default {
   name: 'PostsDetailPage',
-  created () {
+  mounted () {
     if (this.$route.params.id === undefined) { return }
 
+    this.$store.dispatch('setIsLoading', true)
     return PostsService.getPostsById(this.$route.params.id).then((data) => {
       this.mode = 'updatePosts'
       Object.assign(this.form, data)
+      this.$store.dispatch('setIsLoading', false)
     }).catch(error => {
       this.errorMessage = error.message
+      this.$store.dispatch('setIsLoading', false)
     })
   },
   data: function () {
@@ -77,18 +80,22 @@ export default {
       if (this.formValid === false) {
         return
       }
+      this.$store.dispatch('setIsLoading', true)
       if (this.mode === 'updatePosts') {
-        this.$store.dispatch(this.mode, this.form)
-        this.$router.push({ name: 'MainPage' })
-        return
+        setTimeout(() => {
+          this.$store.dispatch(this.mode, this.form)
+          this.$router.push({ name: 'MainPage' })
+          this.$store.dispatch('setIsLoading', false)
+        }, 3000)
+      } else {
+        return PostsService.save(this.form).then(data => {
+          this.$store.dispatch(this.mode, data)
+          this.$router.push({ name: 'MainPage' })
+        }).catch(error => {
+          this.$store.dispatch('setIsLoading', false)
+          this.errorMessage = error.message
+        })
       }
-
-      return PostsService.save(this.form).then(data => {
-        this.$store.dispatch(this.mode, data)
-        this.$router.push({ name: 'MainPage' })
-      }).catch(error => {
-        this.errorMessage = error.message
-      })
     }
   }
 }

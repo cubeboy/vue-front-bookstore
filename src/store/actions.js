@@ -9,3 +9,7 @@ export const updatePosts = ({ commit }, posts) => {
 export const setPostsList = ({ commit }, list) => {
   commit('setPostsList', list)
 }
+
+export const setIsLoading = ({ commit }, status) => {
+  commit('setIsLoading', status)
+}
